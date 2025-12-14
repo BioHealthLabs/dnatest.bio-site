@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>DNATest.bio – What DNA Tests Can (and Cannot) Tell You</title>
+  <meta name="description" content="DNATest.bio explains how DNA tests work, what results mean, and how to choose the right type of DNA test. Independent, evidence-based guidance." />
+  <link rel="canonical" href="https://dnatest.bio/" />
+  <meta name="robots" content="index,follow" />
+
+  <link rel="stylesheet" href="/styles.css" />
+
+  <!-- Google Consent Mode -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      analytics_storage: 'denied'
+    });
+  </script>
+
+  <!-- GA4 (same as Genectics.com) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX', { anonymize_ip: true });
+  </script>
+</head>
+
+<body>
+<div class="page">
+
+  <!-- COOKIE BANNER -->
+  <div id="cookie-banner" class="cookie-banner">
+    <p>
+      We use analytics cookies to understand how visitors use this site and to improve content.
+      You can accept or reject analytics tracking.
+      <a href="/privacy.html">Learn more</a>
+    </p>
+    <div class="cookie-actions">
+      <button id="accept-cookies">Accept</button>
+      <button id="reject-cookies">Reject</button>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <h1>DNATest.bio</h1>
+    <p class="tagline">Independent explanation of DNA testing – without hype.</p>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+
+    <section>
+      <h2>What is a DNA test?</h2>
+      <p>
+        A consumer DNA test analyzes genetic markers to estimate ancestry, identify relatives,
+        and sometimes provide limited health or trait information. These tests are informational,
+        not diagnostic.
+      </p>
+    </section>
+
+    <section>
+      <h2>What DNA tests are good at</h2>
+      <ul>
+        <li>Finding biological relatives</li>
+        <li>Estimating ancestry regions</li>
+        <li>Providing genetic traits and lifestyle insights</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What DNA tests cannot guarantee</h2>
+      <ul>
+        <li>Exact ethnicity percentages</li>
+        <li>Medical diagnoses</li>
+        <li>Complete answers for underrepresented populations</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Types of DNA tests</h2>
+      <p>
+        DNA tests generally fall into ancestry tests, health-focused tests, or combined kits.
+        Each serves different goals.
+      </p>
+    </section>
+
+    <section>
+      <h2>How to choose the right DNA test</h2>
+      <p>
+        The best DNA test depends on whether your priority is ancestry, relatives, or health-related
+        insights. A full comparison of major providers is available at:
+      </p>
+      <p>
+        <a href="https://genectics.com/" target="_blank" rel="noopener">
+          Genectics.com – DNA test comparison
+        </a>
+      </p>
+    </section>
+
+    <section class="note">
+      <p>
+        DNATest.bio is an educational site only. It does not provide medical or legal advice.
+      </p>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© <span id="year"></span> DNATest.bio – Operated by ronarn AS (Norway)</p>
+    <p>
+      <a href="/privacy.html">Privacy & Cookies</a> ·
+      <a href="https://genectics.com/" target="_blank" rel="noopener">Genectics.com</a>
+    </p>
+  </footer>
+
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const banner = document.getElementById('cookie-banner');
+  const accept = document.getElementById('accept-cookies');
+  const reject = document.getElementById('reject-cookies');
+
+  if (localStorage.getItem('cookieChoice')) {
+    banner.style.display = 'none';
+  }
+
+  accept.onclick = () => {
+    gtag('consent', 'update', {
+      analytics_storage: 'granted'
+    });
+    localStorage.setItem('cookieChoice', 'accepted');
+    banner.style.display = 'none';
+  };
+
+  reject.onclick = () => {
+    localStorage.setItem('cookieChoice', 'rejected');
+    banner.style.display = 'none';
+  };
+</script>
+
+</body>
+</html>
