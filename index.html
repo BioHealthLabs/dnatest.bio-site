@@ -14,68 +14,117 @@
 
   <link rel="stylesheet" href="/styles.css" />
 
-  <!-- ===== Consent (same system as Genectics.com) ===== -->
+  <!-- ===== Consent (SAFE VERSION – NO SCROLL BUG) ===== -->
   <style>
     body.consent-locked { overflow: hidden !important; }
+
     .consent-overlay {
-      position: fixed; inset: 0; z-index: 99999;
-      display: none; align-items: center; justify-content: center;
-      background: rgba(15,23,42,.82); backdrop-filter: blur(6px);
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(15,23,42,.82);
+      backdrop-filter: blur(6px);
     }
     .consent-overlay[aria-hidden="false"] { display: flex; }
+
     .consent-modal {
-      max-width: 720px; background:#0b1220; color:#e5e7eb;
-      border-radius:16px; border:1px solid rgba(148,163,184,.18);
+      max-width: 720px;
+      background:#0b1220;
+      color:#e5e7eb;
+      border-radius:16px;
+      border:1px solid rgba(148,163,184,.18);
     }
+
     .consent-body, .consent-actions { padding:18px; }
     .consent-actions { display:flex; gap:10px; flex-wrap:wrap; }
+
     .consent-btn {
-      border-radius:999px; padding:10px 16px; font-weight:700;
-      cursor:pointer; border:0;
+      border-radius:999px;
+      padding:10px 16px;
+      font-weight:700;
+      cursor:pointer;
+      border:0;
     }
+
     .consent-accept { background:#ec4899; color:#0b1220; }
-    .consent-reject { background:transparent; border:1px solid rgba(148,163,184,.35); color:#e5e7eb; }
+    .consent-reject {
+      background:transparent;
+      border:1px solid rgba(148,163,184,.35);
+      color:#e5e7eb;
+    }
   </style>
 
+  <!-- Consent + GA4 (FIXED) -->
   <script>
     (function () {
-      const KEY="ronarn_consent_analytics_v1", GA="G-3GVJ73QQ5J";
+      const KEY = "ronarn_consent_analytics_v1";
+      const GA  = "G-3GVJ73QQ5J";
+
       function loadGA(){
-        if(window.__gaLoaded)return; window.__gaLoaded=true;
-        const s=document.createElement("script");
-        s.async=true; s.src="https://www.googletagmanager.com/gtag/js?id="+GA;
+        if(window.__gaLoaded) return;
+        window.__gaLoaded = true;
+        const s = document.createElement("script");
+        s.async = true;
+        s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA;
         document.head.appendChild(s);
-        window.dataLayer=window.dataLayer||[];
-        function gtag(){dataLayer.push(arguments);} window.gtag=gtag;
-        gtag("js", new Date()); gtag("config", GA, { anonymize_ip:true });
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag("js", new Date());
+        gtag("config", GA, { anonymize_ip:true });
       }
-      document.addEventListener("DOMContentLoaded",()=>{
-        const c=localStorage.getItem(KEY);
-        const o=document.getElementById("consent-overlay");
-        if(c==="accepted"){loadGA();return;}
-        if(c==="rejected")return;
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const consent = localStorage.getItem(KEY);
+        const overlay = document.getElementById("consent-overlay");
+
+        // 🔓 ALWAYS unlock body by default
+        document.body.classList.remove("consent-locked");
+
+        if (consent === "accepted") {
+          loadGA();
+          return;
+        }
+
+        if (consent === "rejected") {
+          return;
+        }
+
+        // 🔒 Lock only if no choice made
         document.body.classList.add("consent-locked");
-        o.setAttribute("aria-hidden","false");
-        document.getElementById("consent-accept").onclick=()=>{
-          localStorage.setItem(KEY,"accepted"); loadGA();
-          o.setAttribute("aria-hidden","true"); document.body.classList.remove("consent-locked");
+        overlay.setAttribute("aria-hidden","false");
+
+        document.getElementById("consent-accept").onclick = () => {
+          localStorage.setItem(KEY,"accepted");
+          loadGA();
+          overlay.setAttribute("aria-hidden","true");
+          document.body.classList.remove("consent-locked");
         };
-        document.getElementById("consent-reject").onclick=()=>{
+
+        document.getElementById("consent-reject").onclick = () => {
           localStorage.setItem(KEY,"rejected");
-          o.setAttribute("aria-hidden","true"); document.body.classList.remove("consent-locked");
+          overlay.setAttribute("aria-hidden","true");
+          document.body.classList.remove("consent-locked");
         };
       });
     })();
   </script>
 </head>
 
-<body class="consent-locked">
+<body>
 
+<!-- Consent overlay -->
 <div id="consent-overlay" class="consent-overlay" aria-hidden="true">
   <div class="consent-modal">
     <div class="consent-body">
       <h2>Privacy choices</h2>
-      <p>We use analytics to understand which guides are useful. Acceptance only affects analytics.</p>
+      <p>
+        DNATest.bio uses analytics to understand which guides are useful.
+        Acceptance only affects analytics.
+      </p>
     </div>
     <div class="consent-actions">
       <button id="consent-accept" class="consent-btn consent-accept">Accept analytics</button>
@@ -93,6 +142,7 @@
       Understand DNA testing – without hype, pressure, or paid rankings.
     </div>
   </div>
+
   <div class="trust-tags">
     <span class="trust-tag">Evidence-based</span>
     <span class="trust-tag">Independent</span>
@@ -112,7 +162,8 @@
 
     <div class="hero-actions">
       <a href="#basics" class="btn-primary">Learn DNA testing basics</a>
-      <a href="https://www.genectics.com/?ref=dnatest.bio" class="btn-secondary" target="_blank" rel="noopener">
+      <a href="https://www.genectics.com/?ref=dnatest.bio"
+         class="btn-secondary" target="_blank" rel="noopener">
         Compare DNA kits on Genectics.com
       </a>
     </div>
@@ -174,11 +225,11 @@
 
 </main>
 
-<!-- ✅ IDENTICAL FOOTER AS GENECTICS.COM -->
+<!-- FOOTER – SAME STRUCTURE AS GENECTICS.COM -->
 <footer class="site-footer">
-  <span>© <span id="year"></span> Retinol.bio – Evidence-based retinol education.</span>
-  <span>Operated by ronarn AS, Norway. Independent information site with links to Retynol.com.</span>
-  <span>Contact: <a href="mailto:info@retinol.bio">info@retinol.bio</a></span>
+  <span>© <span id="year"></span> DNATest.bio – Independent DNA testing education.</span>
+  <span>Operated by ronarn AS, Norway. Independent information site linked to Genectics.com.</span>
+  <span>Contact: <a href="mailto:info@dnatest.bio">info@dnatest.bio</a></span>
   <span>Business address: Pb. 1010 Lillestrøm Syd, 2012 Lillestrøm, Norway</span>
 
   <nav class="footer-links">
@@ -196,15 +247,8 @@
     <span>
       <a href="https://organization.bio" target="_blank" rel="noopener">About the Publisher</a> ·
       <a href="https://contactus.bio" target="_blank" rel="noopener">Contact</a> ·
-      <a href="https://affiliates.bio" target="_blank" rel="noopener">Affiliates</a> ·
-      <a href="https://advertisement.bio" target="_blank" rel="noopener">Advertisements</a> ·
       <a href="https://guides.bio" target="_blank" rel="noopener">Editorial Guides</a> ·
-      <a href="https://ethics.bio" target="_blank" rel="noopener">Ethics</a> ·
-      <a href="https://standards.bio" target="_blank" rel="noopener">Editorial Standards</a> ·
-      <a href="https://audits.bio" target="_blank" rel="noopener">Audits</a> ·
-      <a href="https://verification.bio" target="_blank" rel="noopener">Verification</a> ·
-      <a href="https://indexing.bio" target="_blank" rel="noopener">Indexing</a> ·
-      <a href="https://retynol.com/" target="_blank" rel="noopener">Retynol.com – Product comparison</a>
+      <a href="https://standards.bio" target="_blank" rel="noopener">Editorial Standards</a>
     </span>
   </nav>
 </footer>
